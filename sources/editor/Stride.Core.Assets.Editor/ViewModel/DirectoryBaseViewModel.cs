@@ -15,6 +15,7 @@ namespace Stride.Core.Assets.Editor.ViewModel
     public abstract class DirectoryBaseViewModel : SessionObjectViewModel, IChildViewModel, IAddChildViewModel
     {
         public const string Separator = "/";
+        private static readonly char[] _separatorArray = Separator.ToCharArray();
         public const string NewFolderDefaultName = "New folder";
         private readonly AutoUpdatingSortedObservableCollection<DirectoryViewModel> subDirectories = new AutoUpdatingSortedObservableCollection<DirectoryViewModel>(CompareDirectories);
         private readonly ObservableList<AssetViewModel> assets = new ObservableList<AssetViewModel>();
@@ -121,7 +122,7 @@ namespace Stride.Core.Assets.Editor.ViewModel
         public DirectoryBaseViewModel GetDirectory(string path)
         {
             if (path == null) throw new ArgumentNullException(nameof(path));
-            var directoryNames = path.Split(Separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var directoryNames = path.Split(_separatorArray, StringSplitOptions.RemoveEmptyEntries);
             DirectoryBaseViewModel currentDirectory = this;
             foreach (var directoryName in directoryNames)
             {
@@ -146,7 +147,7 @@ namespace Stride.Core.Assets.Editor.ViewModel
             DirectoryBaseViewModel result = this;
             if (!string.IsNullOrEmpty(path))
             {
-                var directoryNames = path.Split(Separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                var directoryNames = path.Split(_separatorArray, StringSplitOptions.RemoveEmptyEntries);
                 result = directoryNames.Aggregate(result, (current, next) => current.SubDirectories.FirstOrDefault(x => string.Equals(next, x.Name, StringComparison.InvariantCultureIgnoreCase)) ?? new DirectoryViewModel(next, current, canUndoRedoCreation));
             }
             return result;

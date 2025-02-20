@@ -24,6 +24,7 @@ namespace Stride.Core.Assets.Editor.Settings.ViewModels
     /// </summary>
     internal class SettingsViewModel : PropertiesViewModel
     {
+        private static readonly char[] _separator = { '/' };
         private SettingsCategoryViewModel selectedCategory;
         protected new AssetNodeContainer NodeContainer => (AssetNodeContainer)base.NodeContainer;
 
@@ -84,7 +85,7 @@ namespace Stride.Core.Assets.Editor.Settings.ViewModels
             foreach (var name in settingsDirectoryNames)
             {
                 SettingsCategoryViewModel currentCategory = null;
-                var categoryNames = name.ToString().Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                var categoryNames = name.ToString().Split(_separator, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var category in categoryNames)
                 {
                     var nextCategory = (currentCategory != null ? currentCategory.SubCategories : Categories).FirstOrDefault(x => x.Name == category);

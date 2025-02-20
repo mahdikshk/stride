@@ -9,6 +9,7 @@ namespace Stride.Core.Assets.Editor.Components.TemplateDescriptions.ViewModels
 {
     public abstract class TemplateDescriptionCollectionViewModel : DispatcherViewModel
     {
+        private static readonly char[] _separators = "/\\".ToCharArray();
         private readonly ObservableList<ITemplateDescriptionViewModel> templates = new ObservableList<ITemplateDescriptionViewModel>();
 
         private TemplateDescriptionGroupViewModel selectedGroup;
@@ -39,7 +40,7 @@ namespace Stride.Core.Assets.Editor.Components.TemplateDescriptions.ViewModels
             if (string.IsNullOrWhiteSpace(groupPath))
                 return null;
 
-            var groupDirectories = groupPath.Split("/\\".ToCharArray());
+            var groupDirectories = groupPath.Split(_separators);
             return groupDirectories.Aggregate(rootGroup, (current, groupDirectory) => current.SubGroups.FirstOrDefault(x => x.Name == groupDirectory) ?? new TemplateDescriptionGroupViewModel(current, groupDirectory));
         }
 

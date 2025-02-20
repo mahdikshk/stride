@@ -40,6 +40,7 @@ namespace Stride.Assets.Presentation.AssetEditors.EntityHierarchyEditor.ViewMode
     /// </summary>
     public abstract class EntityHierarchyEditorViewModel : AssetCompositeHierarchyEditorViewModel<EntityDesign, Entity, EntityViewModel>, IAddChildViewModel
     {
+        private static readonly char[] _separators = " \t\n\r".ToCharArray();
         private static readonly ILogger EditorLogger = GlobalLogger.GetLogger("Scene");
         private EntityHierarchyRootViewModel activeRoot;
         private readonly IDebugPage debugPage;
@@ -666,7 +667,7 @@ namespace Stride.Assets.Presentation.AssetEditors.EntityHierarchyEditor.ViewMode
 
         private void UpdateVisibilities()
         {
-            filterTokens = filterPattern.Split(" \t\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.ToLowerInvariant()).ToList();
+            filterTokens = filterPattern.Split(_separators, StringSplitOptions.RemoveEmptyEntries).Select(x => x.ToLowerInvariant()).ToList();
             foreach (var content in HierarchyRoot.Children)
             {
                 UpdateVisibilities(content);

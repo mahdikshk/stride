@@ -9,6 +9,7 @@ namespace Stride.Core.Extensions
 {
     public static class ExceptionExtensions
     {
+        private static readonly char[] _separators = { '\r', '\n' };
         /// <summary>
         /// Represents the maximum number of lines to include in the stack trace when formatting a exception to be displayed in a dialog.
         /// </summary>
@@ -108,7 +109,7 @@ namespace Stride.Core.Extensions
                 return;
 
             var indentString = "".PadLeft(indent);
-            var stackTraceArray = exception.StackTrace.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var stackTraceArray = exception.StackTrace.Split(_separators, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in maxLines > 0 ? stackTraceArray.Take(maxLines) : stackTraceArray)
             {
                 sb.Append(indentString);

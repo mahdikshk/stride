@@ -17,6 +17,7 @@ namespace Stride.Core.Presentation.Extensions
     /// </summary>
     public static class DrawingContextExtensions
     {
+        private static readonly char[] _separators = "^_".ToCharArray();
         /// <summary>
         /// Gets or sets the subscript alignment.
         /// </summary>
@@ -187,7 +188,7 @@ namespace Stride.Core.Presentation.Extensions
                 }
 
                 // Regular text
-                var i2 = s.IndexOfAny("^_".ToCharArray(), i + 1);
+                var i2 = s.IndexOfAny(_separators, i + 1);
                 string regularString;
                 if (i2 == -1)
                 {

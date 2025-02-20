@@ -15,6 +15,7 @@ namespace Stride.Core.Translation.Extractor
 {
     internal class CSharpExtractor : ExtractorBase
     {
+        private static readonly char[] _trimChars = @"@""".ToCharArray();
         // note: see https://stackoverflow.com/questions/4953737/regex-for-matching-c-sharp-string-literals
         private const string CSharpStringPattern = @"
             (                   # capturing group for the string
@@ -179,7 +180,7 @@ namespace Stride.Core.Translation.Extractor
 
             string Unescape(string str)
             {
-                return str.StartsWith('@') ? str.Trim(@"@""".ToCharArray()) : Regex.Unescape(str.Trim(@"@""".ToCharArray()));
+                return str.StartsWith('@') ? str.Trim(_trimChars) : Regex.Unescape(str.Trim(_trimChars));
             }
         }
 

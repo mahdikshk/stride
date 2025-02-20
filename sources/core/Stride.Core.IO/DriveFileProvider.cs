@@ -50,7 +50,7 @@ namespace Stride.Core.IO
             var result = new StringBuilder(url.Length + 1);
             int separatorIndex = 0;
 
-            foreach (var c in url.ToCharArray())
+            foreach (var c in url.AsSpan())
             {
                 if (c == VirtualFileSystem.DirectorySeparatorChar || c == VirtualFileSystem.AltDirectorySeparatorChar)
                 {
@@ -90,7 +90,7 @@ namespace Stride.Core.IO
 
             result.Append(VirtualFileSystem.DirectorySeparatorChar);
 
-            foreach (var c in path.ToCharArray())
+            foreach (var c in path.AsSpan())
             {
                 if (c == VolumeSeparatorChar)
                 {

@@ -20,6 +20,7 @@ namespace Stride.Core.Presentation.Controls
     [TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
     public class FilteringComboBox : Selector
     {
+        private static readonly char[] _separators = " \t\r\n".ToCharArray();
         /// <summary>
         /// A dependency property used to safely evaluate the value of an item given a path.
         /// </summary>
@@ -547,7 +548,7 @@ namespace Stride.Core.Presentation.Controls
 
         private static bool MatchText([NotNull] string inputText, string text)
         {
-            var tokens = inputText.Split(" \t\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var tokens = inputText.Split(_separators, StringSplitOptions.RemoveEmptyEntries);
             foreach (var token in tokens)
             {
                 if (text.IndexOf(token, StringComparison.InvariantCultureIgnoreCase) < 0 && !token.MatchCamelCase(text))
